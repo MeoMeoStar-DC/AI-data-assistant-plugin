@@ -1,0 +1,26 @@
+{
+  "name": "ai-data-assistant",
+  "version": "0.1.2",
+  "description": "面向 Codex 的自主只读业务数据分析与元数据检索插件",
+  "author": {
+    "name": "AI 数据助手项目组"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI 数据助手",
+    "shortDescription": "自主检索业务元数据并执行受成本约束的只读分析",
+    "longDescription": "通过独立 MCP 为 Codex 提供正式参考、原始 ETL 与 Tableau 元数据、Redshift 实时发现，以及 EXPLAIN 成本门禁保护的自主只读查询。",
+    "developerName": "AI 数据助手项目组",
+    "category": "Productivity",
+    "capabilities": [
+      "Read-only analytics",
+      "Metadata discovery"
+    ],
+    "defaultPrompt": [
+      "分析这个业务问题，并说明实际来源、口径和限制。",
+      "查看原始 ETL 与 Tableau 元数据，核实字段和血缘。"
+    ]
+  },
+  "mcpServers": "./.mcp.json",
+  "repository": "https://github.com/MeoMeoStar-DC/AI-data-assistant-plugin"
+}

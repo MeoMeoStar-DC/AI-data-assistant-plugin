@@ -1,0 +1,12 @@
+interface:
+  display_name: "自主数据分析"
+  short_description: "自主发现数仓结构并执行受成本门禁保护的只读业务分析"
+  default_prompt: "Use $autonomous-data-analysis to investigate this business question with governed read-only data tools."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "ai-data-assistant"
+      description: "自主只读分析、Redshift 发现与 EXPLAIN 成本预览工具"
+      transport: "stdio"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,12 @@
+interface:
+  display_name: "分析资料检索"
+  short_description: "检索正式指标、原始ETL与Tableau元数据分析证据"
+  default_prompt: "Use $analytics-reference to inspect metric, ETL, and Tableau metadata evidence for this analysis."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "ai-data-assistant"
+      description: "正式参考以及原始 ETL 与 Tableau 元数据读取工具"
+      transport: "stdio"
+policy:
+  allow_implicit_invocation: true

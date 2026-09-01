@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "ai-data-assistant": {
+      "type": "http",
+      "url": "https://mcp.aidamms.com/mcp",
+      "tool_timeout_sec": 335
+    }
+  }
+}
