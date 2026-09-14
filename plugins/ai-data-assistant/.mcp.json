@@ -3,7 +3,12 @@
     "ai-data-assistant": {
       "type": "http",
       "url": "https://mcp.aidamms.com/mcp",
-      "tool_timeout_sec": 335
+      "tool_timeout_sec": 335,
+      "oauth": {
+        "clientId": "tpc_koL6FPdb8AUPSEvM7pF55i",
+        "callbackUrl": "http://127.0.0.1:14550/callback/wg8_vTv5Twuq",
+        "callbackPort": 14550
+      }
     }
   }
 }

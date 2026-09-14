@@ -27,5 +27,5 @@ codex plugin add ai-data-assistant@ai-data-assistant-team
 ## 安全边界
 
 - MCP 固定连接 `https://mcp.aidamms.com/mcp`。
-- 本仓库不包含本地 Node 启动脚本、服务器代码、凭据、token、client ID、业务日志或原始 metadata。
+- 本仓库只包含可公开的预注册 OAuth Client ID 和回调地址；不包含 Client Secret、token、其他凭据、本地 Node 启动脚本、服务器代码、业务日志或原始 metadata。
 - `distribution-manifest.json` 记录生成所用的主仓库提交和源文件哈希。
