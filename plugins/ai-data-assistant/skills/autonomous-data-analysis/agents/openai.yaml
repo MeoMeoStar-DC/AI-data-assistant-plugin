@@ -7,6 +7,7 @@ dependencies:
     - type: "mcp"
       value: "ai-data-assistant"
       description: "自主只读分析、Redshift 发现与 EXPLAIN 成本预览工具"
-      transport: "stdio"
+      transport: "streamable_http"
+      url: "https://mcp.aidamms.com/mcp"
 policy:
   allow_implicit_invocation: true

@@ -9,16 +9,23 @@ description: 使用 AI 数据助手 MCP 自主调查业务问题、发现 Redshi
 
 ## 工作流
 
-1. 从问题提取指标原词、期间原文、时区、时间桶、维度、筛选、人群、比较侧和输出要求，只调用一次 `prepare_analysis` 固定 Runtime 快照、正式义务和 `plan_signature`。同一请求即使仍在等待后续规划，也不得用相同参数重复调用；直接复用首次返回的不可变合同。`metric_mentions` 保留用户的 Cash/真金等限定，不要先改写成可能丢失范围的指标 ID。用户使用“昨天/前一天”“最近 N 个 UTC 业务日”“最近 N 个已成熟 cohort”“最近 N 个完整周”等相对期间时，将包含比较侧的完整原文放入 `period_expression` 且不自行填入日期；宿主按 Runtime 业务日、指标成熟滞后和 UTC 自然周确定性解析。用户明确绝对日期时才传 `start_date` 和 `end_date`。不要猜测会实质改变结果的口径。
+1. 从问题提取指标原词、期间原文、时区、时间桶、维度、筛选、人群、比较侧和输出要求，同一有效请求合同内只调用一次 `prepare_analysis` 固定 Runtime 快照、正式义务和 `plan_signature`。同一请求即使仍在等待后续规划，也不得用相同参数重复调用；直接复用首次返回的不可变合同。用户改变期间、维度、筛选或目标，或服务端明确提示合同失效时，重新准备合同；旧 evidence、preview token 和 job 不自动绑定新合同，重新验证适用性，按新合同重新预览必要查询。`metric_mentions` 保留用户的 Cash/真金等限定，不要先改写成可能丢失范围的指标 ID。用户使用“昨天/前一天”“最近 N 个 UTC 业务日”“最近 N 个已成熟 cohort”“最近 N 个完整周”等相对期间时，将包含比较侧的完整原文放入 `period_expression` 且不自行填入日期；宿主按 Runtime 业务日、指标成熟滞后和 UTC 自然周确定性解析。用户明确绝对日期时才传 `start_date` 和 `end_date`。不要猜测会实质改变结果的口径。
 2. 只为未解析义务或必要的公式、维度、字段和血缘调用参考工具。`get_metric_reference` 默认使用 `detail=summary` 和小 `limit`；精确命中后停止扩大候选，只有确需公式或来源合同时才读取 `full`。
-3. 后续 Tableau 和 Redshift 查询都传入 `prepare_analysis` 返回的 `analysis_id`。UTC 合同下，兼容的 2 至 8 个 Tableau 指标优先调用一次 `query_tableau_reference_metrics`；正式来源、期间、筛选及 coverage 完整且 `evidence_role=authoritative_result` 时直接使用结果，不追加无信息增益的 Redshift 验证。显式非 UTC 合同不得调用 Tableau。
+3. 后续 Tableau 和 Redshift 查询都传入 `prepare_analysis` 返回的 `analysis_id`。UTC 合同下，单指标可调用 `query_tableau_reference_metric`；兼容的 2 至 8 个 Tableau 指标优先调用一次 `query_tableau_reference_metrics`；正式来源、期间、筛选及 coverage 完整且 `evidence_role=authoritative_result` 时直接使用结果，不追加无信息增益的 Redshift 验证。显式非 UTC 合同不得调用 Tableau。
 4. 正式资料不足时调用 `search_redshift_tables` 和 `describe_redshift_table` 验证实际结构。ETL 精确目标表已返回完整声明列且 `requires_live_describe=false` 时不重复 describe。只使用允许 schema，优先 DWS 和最低必要明细层。
 5. 使用命名参数和显式列投影编写 `SELECT` 或 `WITH`。同一 SQL 结构仅参数不同的单元先改写成一次分组查询；无法证明等价时才使用 batch，普通分析软预算为 8 个执行单元。
 6. 单计划调用 `preview_redshift_readonly`，多个不可合并计划调用 `preview_redshift_readonly_batch`。用于回答结论的执行单元传 `coverage_mode=result`，并传入它实际产出的非空 `coverage_obligation_ids`；多义务分析不得省略，也不得把未由该 SQL 产出的义务一并声明。仅做结构验证、对账或来源可用性检查的执行单元传 `coverage_mode=validation` 和空 coverage；其 `validation_result` 证据不得用于完成正式义务。宿主会在 EXPLAIN 前拒绝缺失、空或未知的结论义务 ID，修正同一计划后可继续，不得因此关闭已有结果。preview 成功后、任何 `start` 或兼容 `execute` 前，先在 commentary 或等价用户可见消息中按执行单元展示：完整 `sql` 代码块、命名参数与非敏感实际值、敏感值脱敏说明、目标表、实际日期、时区、结果粒度、筛选、测试用户策略、预计结构和 `row_limit`。最终结果、validation、跨表、用户去重、比率重算、非 UTC 和自定义指标 SQL 必须逐段解释主要 CTE、关联键、分区条件、聚合公式、分子分母及防重方法；metadata SQL 可简述但不能省略完整 SQL。
 7. 展示后调用 `record_sql_disclosure`，传回 preview 的 `analysis_id`、`disclosure_id` 和 `sql_digest`。SQL 展示不是用户审批门禁，登记后继续执行；遗漏时先补展示，不能因此丢弃可信事实或直接失败关闭。默认使用 `start_redshift_readonly` / `start_redshift_readonly_batch`，再用 `get_redshift_execution_status` 和 `get_redshift_execution_result` 分页取得完整行。同步 `execute` 仅为明确暴露该能力的兼容入口。只传回未过期 token，不在执行阶段替换 SQL、参数或限制。
 8. 用户取消、请求事务失效或结果已不再需要时，对仍为 `queued` / `running` 的 job 调用 `cancel_redshift_execution`。只有返回 `cancelled` 才视为仓库取消已确认；返回 `completed` 时继续使用已完成结果，返回 `failed` 时披露取消失败，不重复无界取消。
-9. 成本失败先按恢复建议合并计划、缩短期间、增加选择性筛选或改用汇总层。同一个 `failure_signature` 没有新表、分区、连接或谓词证据时不得重试；保留其他成功子计划。
+9. 成本失败先合并等价计划、利用原请求已有分区/筛选或改用等价汇总层；能力允许时按原期间分块并校验完整覆盖，不通过分块规避总体成本限制。不得默默缩短期间或增加改变人群的筛选。无法覆盖全请求时，只交付明确标注实际范围和缺失义务的部分结果，或向用户提出具体的缩小范围选择，不能宣称完整回答。同一个 `failure_signature` 没有新表、分区、连接或谓词证据时不得重试；保留其他成功子计划。
 10. 使用实际 row set 收口，并在最终回答前调用一次 `finalize_analysis`，只选择实际支撑结论的 `evidence_id`，如实传入限制。以服务端 OutcomeEnvelope 的 coverage、状态、事实哈希和 disclosure 状态为准；工具不可用时可兼容交付旧结果，但必须明确 `outcome_not_recorded`。完整时直接交付，部分成功或外部能力缺失时使用 `completed_with_limitations` 交付可信部分，不猜字段、不补零、不反复扫描明细层。
+
+## 路由、权限与业务交付
+
+- 只查定义时使用 `analytics-reference`，不启动业务查询；分析中查资料复用当前合同。只调用当前已授权且可用的工具，raw 元数据缺失时优先正式参考和允许的结构发现，不把辅助权限缺失升级为整题失败。整体连接异常时使用 `assistant-connection`；正常分析不重复登录检查。
+- 最终回答先给出直接回应问题的业务结论，再给关键量化证据、口径与限制。比较同时说明两侧实际值、差值和有意义的变化率；零分母、不同单位或不同人群不强行计算。
+- 趋势覆盖请求的整体期间和主要变化，不能以峰谷或返回行数替代分析。归因区分已计算贡献、相关现象与待验证原因；没有因果证据不声称因果关系。用户提出多个比较或分析轴时逐项回答，未覆盖部分明确披露。
+- 解释展示字段的业务含义、单位和派生计算；区分空值、缺行和零，不对标识符作无意义均值或极差。部分结果保留可信结论，但不掩盖期间缺口、截断和口径差异。
 
 ## 报告附录
 

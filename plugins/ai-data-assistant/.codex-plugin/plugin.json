@@ -1,6 +1,6 @@
 {
   "name": "ai-data-assistant",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "面向 Codex 的自主只读业务数据分析与元数据检索插件",
   "author": {
     "name": "AI 数据助手项目组"
@@ -18,7 +18,8 @@
     ],
     "defaultPrompt": [
       "分析这个业务问题，并说明实际来源、口径和限制。",
-      "查看原始 ETL 与 Tableau 元数据，核实字段和血缘。"
+      "查看原始 ETL 与 Tableau 元数据，核实字段和血缘。",
+      "连接 AI 数据助手，或恢复授权并验证正式指标读取。"
     ]
   },
   "mcpServers": "./.mcp.json",

@@ -13,7 +13,13 @@ description: 检索 AI 数据助手的正式指标、维度、Runtime、Tableau�
 - 使用 `get_dimension_reference` 查询维度定义和同义词；只有问题需要枚举值时才设置 `include_observed_values=true`。
 - 使用 `get_runtime_reference_status` 检查 snapshot、业务日和 READY；异常只作为 freshness warning。
 - 使用 `search_tableau_catalog` 与 `search_etl_reference` 检索经过解析或发布的参考目录。
-- 需要数值时，先调用一次 `prepare_analysis` 固定义务、绝对期间和 Runtime 快照，并把返回的 `analysis_id` 传给 Tableau 查询；一个指标使用 `query_tableau_reference_metric`，兼容的 2 至 8 个指标使用 `query_tableau_reference_metrics`。根据返回的 `evidence_role` 区分正式完整结果与带限制对照，不把所有 Tableau 结果降级成规划资料。不得绕过合同执行未记账的 Tableau 业务查询，也不得推断其他请求的 `analysis_id`。
+- 仅查定义、公式、字段或血缘时，不调用 `prepare_analysis`、Tableau 数值查询或 `finalize_analysis`。用户需要业务数值时，由同包 `autonomous-data-analysis` 接管完整查询和收口流程；已有有效 `analysis_id` 时传递该合同与资料证据，不重复准备。若宿主没有加载该 Skill，先读取同包 `../autonomous-data-analysis/SKILL.md`，不要另建简化业务查询流程。
+
+## 权限与交付
+
+按当前实际可用工具选择路径，不为每次参考查询重复检查登录。原始资料仅在已授权 `metadata.raw.read` 且工具可用时读取；账号角色名称不能替代实际权限。raw 工具不可用时，继续使用正式指标、维度和允许的解析目录，说明未验证的原始血缘，不反复调用越权工具或判定登录失败。只有整体连接异常时使用同包 `assistant-connection`。
+
+交付先给出定义或核对结论，再列单位、公式、适用范围和证据来源；区分正式口径与原始观测差异，不把目录字段或原始资料当成业务数值结果。未取得证据的字段明确标为未验证，不补造公式。
 
 ## 原始资料
 

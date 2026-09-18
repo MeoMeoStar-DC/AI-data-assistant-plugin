@@ -7,6 +7,7 @@ dependencies:
     - type: "mcp"
       value: "ai-data-assistant"
       description: "正式参考以及原始 ETL 与 Tableau 元数据读取工具"
-      transport: "stdio"
+      transport: "streamable_http"
+      url: "https://mcp.aidamms.com/mcp"
 policy:
   allow_implicit_invocation: true

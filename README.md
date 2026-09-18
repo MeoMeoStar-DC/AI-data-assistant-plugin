@@ -1,19 +1,19 @@
 # AI 数据助手远程 Plugin
 
-本仓库是 `https://github.com/ddddnake/AI-intelligent-analysis-Python` 的确定性分发产物，只包含 Codex 桌面版所需的 Plugin manifest、远程 MCP 配置和两套 Skill。
+本仓库是 `https://github.com/ddddnake/AI-intelligent-analysis-Python` 的确定性分发产物，只包含 Codex 桌面版所需的 Plugin manifest、远程 MCP 配置和两套业务 Skill 和一套连接排障 Skill。
 
 所有文件均由主仓库的 `scripts/generate_ai_data_assistant_plugin_distribution.py` 生成。禁止在本仓库手工修改；修改会在下一次生成时被拒绝或覆盖。
 
 ## 安装
 
-成员必须先配置 GitHub SSH key，并获得本私有仓库的只读权限。
+本仓库公开可读，使用 HTTPS 安装，不需要 GitHub 账号、PAT 或 SSH key。
 
 ```bash
-codex plugin marketplace add git@github.com:MeoMeoStar-DC/AI-data-assistant-plugin.git --ref stable
+codex plugin marketplace add https://github.com/MeoMeoStar-DC/AI-data-assistant-plugin.git --ref stable
 codex plugin add ai-data-assistant@ai-data-assistant-team
 ```
 
-重启 Codex 桌面版，在新会话中使用“AI 数据助手”。安装时通过 Auth0 使用个人身份授权。
+重启 Codex 桌面版，在新会话中使用“AI 数据助手”。在插件详情或首次使用的连接提示中，通过 Auth0 使用个人身份授权。没有提示时先核对插件加载状态，不要另外添加同名 MCP。
 
 ## 更新
 

@@ -1,27 +1,32 @@
 {
   "schema_version": 1,
   "plugin_name": "ai-data-assistant",
-  "plugin_version": "0.1.3",
+  "plugin_version": "0.1.4",
   "source_repository": "https://github.com/ddddnake/AI-intelligent-analysis-Python",
-  "source_commit": "fe02c27f725ff173f586b0055edb5829eac58c90",
+  "source_commit": "8e6528b30590e8c7a427c571dea483756b9ad59c",
   "source_files": {
-    "plugins/ai-data-assistant/.codex-plugin/plugin.json": "8ef55da9d3f1b8b387b06e87b805edce699660a0519ac66deee17903989c6e7d",
-    "plugins/ai-data-assistant/skills/analytics-reference/SKILL.md": "9f3caa714ebd0612b49525872bb9e5a7a725d3c761ab058fe1aabecc50775683",
+    "plugins/ai-data-assistant/.codex-plugin/plugin.json": "29885c928db788b6e149e76926d3db14c3f2041a3ea04a50a90c561aea9d195c",
+    "plugins/ai-data-assistant/skills/analytics-reference/SKILL.md": "3382c4f9846bb7002392955f252709b6ee3cc7800face3ca5f2c37bfd211ba90",
     "plugins/ai-data-assistant/skills/analytics-reference/agents/openai.yaml": "afd1280412d1d0a92fd6954edd28db06224796c7b324d2d9559e681c49e46496",
-    "plugins/ai-data-assistant/skills/autonomous-data-analysis/SKILL.md": "6a418855984cef9f50e3d60bc9ae3e956257abf65544955d8b88bd4036a1d736",
-    "plugins/ai-data-assistant/skills/autonomous-data-analysis/agents/openai.yaml": "9d72e66a1b9e61a182a98184aa7fde7c794392f6b5497534b38c279291c9461a"
+    "plugins/ai-data-assistant/skills/autonomous-data-analysis/SKILL.md": "d6ec6cb9e844f0bb8c985d527ec022f7e6c58de1bce61ee21959484a64d319d0",
+    "plugins/ai-data-assistant/skills/autonomous-data-analysis/agents/openai.yaml": "9d72e66a1b9e61a182a98184aa7fde7c794392f6b5497534b38c279291c9461a",
+    "plugins/ai-data-assistant/skills/assistant-connection/SKILL.md": "de0aef2bb67098c34ca38d678301a27993b787903b91b80f82f3097800117381",
+    "plugins/ai-data-assistant/skills/assistant-connection/agents/openai.yaml": "62323d07af1b69147a1b8006baa734641d244c4e371246682bc31a1d43e35557"
   },
   "generated_files": {
     ".agents/plugins/marketplace.json": "526c1c9eab3b16bf9393d2cc1980fb80412adfb9de9a372780cba7567b92383c",
-    "README.md": "869abca71c589990447d193ca6bc52a026f3e6f8036df63bc284d108ce8fb92d",
-    "plugins/ai-data-assistant/.codex-plugin/plugin.json": "f513d25d977f9d7232481a289de9a65d5ffdbc358f27eab2b3ee4aa6a65a3373",
+    "README.md": "2667e45abb349476861c69c9d546a5259fe5c5ce1f8dfff2129da5b540ff05ee",
+    "plugins/ai-data-assistant/.codex-plugin/plugin.json": "ce846f6ccc41f17398770b9545bac8b5e3210417595d817a5da248b08b73c488",
     "plugins/ai-data-assistant/.mcp.json": "3d13d72695bf6ed5b8c82d21ca894bf3029cae3e93cdb419554adf9f9785e391",
-    "plugins/ai-data-assistant/skills/analytics-reference/SKILL.md": "9f3caa714ebd0612b49525872bb9e5a7a725d3c761ab058fe1aabecc50775683",
-    "plugins/ai-data-assistant/skills/analytics-reference/agents/openai.yaml": "afd1280412d1d0a92fd6954edd28db06224796c7b324d2d9559e681c49e46496",
-    "plugins/ai-data-assistant/skills/autonomous-data-analysis/SKILL.md": "6a418855984cef9f50e3d60bc9ae3e956257abf65544955d8b88bd4036a1d736",
-    "plugins/ai-data-assistant/skills/autonomous-data-analysis/agents/openai.yaml": "9d72e66a1b9e61a182a98184aa7fde7c794392f6b5497534b38c279291c9461a"
+    "plugins/ai-data-assistant/skills/analytics-reference/SKILL.md": "3382c4f9846bb7002392955f252709b6ee3cc7800face3ca5f2c37bfd211ba90",
+    "plugins/ai-data-assistant/skills/analytics-reference/agents/openai.yaml": "d42e1b943d6295140f1737694cb7fd94e2c738d8b466bebe01fddbabcf474088",
+    "plugins/ai-data-assistant/skills/assistant-connection/SKILL.md": "de0aef2bb67098c34ca38d678301a27993b787903b91b80f82f3097800117381",
+    "plugins/ai-data-assistant/skills/assistant-connection/agents/openai.yaml": "62323d07af1b69147a1b8006baa734641d244c4e371246682bc31a1d43e35557",
+    "plugins/ai-data-assistant/skills/autonomous-data-analysis/SKILL.md": "d6ec6cb9e844f0bb8c985d527ec022f7e6c58de1bce61ee21959484a64d319d0",
+    "plugins/ai-data-assistant/skills/autonomous-data-analysis/agents/openai.yaml": "7737da88ef8bbd59615d8ea87d2cb7554ec287e1f3e3bb79adec7945548f87f7"
   },
   "generator": "scripts/generate_ai_data_assistant_plugin_distribution.py",
+  "generator_sha256": "056d83ca496a9a3e9fc2636bc8beab4bf9ca2bb8cb3823e3941f433b0c8b979a",
   "distribution_repository": "https://github.com/MeoMeoStar-DC/AI-data-assistant-plugin",
   "mcp_url": "https://mcp.aidamms.com/mcp"
 }

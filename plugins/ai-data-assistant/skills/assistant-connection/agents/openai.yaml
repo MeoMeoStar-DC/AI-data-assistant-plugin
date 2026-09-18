@@ -1,0 +1,6 @@
+interface:
+  display_name: "连接与授权排障"
+  short_description: "恢复 AI 数据助手已有连接与 OAuth 授权，并验证正式指标工具可用"
+  default_prompt: "使用 $assistant-connection 恢复 AI 数据助手连接，并验证 DAU 正式定义读取。"
+policy:
+  allow_implicit_invocation: true
