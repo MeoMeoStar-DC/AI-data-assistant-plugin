@@ -1,6 +1,6 @@
 # AI 数据助手远程 Plugin
 
-本仓库是 `https://github.com/ddddnake/AI-intelligent-analysis-Python` 的确定性分发产物，只包含 Codex 桌面版所需的 Plugin manifest、远程 MCP 配置和两套业务 Skill 和一套连接排障 Skill。
+本仓库是 `https://github.com/ddddnake/AI-intelligent-analysis-Python` 的确定性分发产物，只包含 Codex 桌面版所需的 Plugin manifest、远程 MCP 配置、两套业务 Skill、一套连接排障 Skill 和自主分析的三份专题参考。
 
 所有文件均由主仓库的 `scripts/generate_ai_data_assistant_plugin_distribution.py` 生成。禁止在本仓库手工修改；修改会在下一次生成时被拒绝或覆盖。
 

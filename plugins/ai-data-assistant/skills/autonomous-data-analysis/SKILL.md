@@ -7,7 +7,33 @@ description: 使用 AI 数据助手 MCP 自主调查业务问题、发现 Redshi
 
 主动完成合法的只读业务分析。正式参考用于提高准确率，但参考缺失、过期、失败或与 Redshift 不一致时，继续使用可验证的只读路径，并披露差异。
 
+## 按任务读取分析方法
+
+普通取数直接进入下方工作流；深度分析按需读取对应参考，不为简单问题加载全部材料，也不重复建立分析合同。
+
+- 解释变化、异常或人群结构差异：读取 [指标诊断](references/metric-diagnostics.md)，在同一合同内核实前提、选择有信息增益的下钻并验证候选解释。
+- 缺失、重复、关联放大、来源冲突可能改变结论：读取 [数据质量](references/data-quality.md)，只检查影响当前结论的风险。
+- 多阶段分析收口或用户要求复核报告：读取 [分析验证](references/analysis-validation.md)，对照原问题检查重要数值、证据和实际交付。
+
+计算能力以当前实际暴露的工具为准；没有计算工具时继续用已有可信查询结果交付。不得调用未暴露的工具或将业务数据上传到未经授权的计算环境。
+
+## 可选统计计算
+
+只有当前服务暴露 `prepare_analysis_dataset` 和 `start_analysis_compute` 时才进入此流程。大规模聚合仍优先在受治理 SQL 层完成；计算仅用于已有结果上的分布、分位数、变化贡献、置信区间和异常复核。
+
+1. 向 `prepare_analysis_dataset` 提交本合同的 `evidence_ids` 和所需 `fields`；输入必须来自服务端记录，不能上传自行重写的表格。检查返回的行数、截断及字段，数据不完整时限定结论范围。
+2. 向 `start_analysis_compute` 提交数据集引用、Python 代码、方法说明、参数和固定 `seed`。代码读取 `dataset['tables']`（各表含 `rows`、期间、人群筛选和来源信息）及 `parameters`；最终赋值 `result={'findings': [...], 'limitations': [...]}`。每项发现写明量化结果、方法、适用人群与期间；图表可保存为当前目录的 `chart.png`。不要从网络补数据、修改原始输入或读取凭据。
+3. 用 `get_analysis_compute_status` 读取同一任务，取消时调用 `cancel_analysis_compute` 并核对终态；错误、超时或取消失败要明确披露。已有可信查询结果先交付，辅助计算失败不触发整题拒答。
+4. 对实际使用的产物按 `read_analysis_artifact` 的 `next_offset` 完整读取，核对整体哈希后再交付 Notebook、结构化结果、输入、参数、执行环境及可选图表。产物不可用不能声称附件已交付；`historical=true` 只能作为历史记录。
+5. 收口时把实际使用的 `derived_id` 放入 `finalize_analysis.selected_derived_ids`，原始 `evidence_id` 仍单独提交。`analysis_validation` 与查询 coverage 分别解释；`execution_recorded` 只证明记录了执行，`method_review_required=true` 表示仍需复核统计方法、分母、样本、期间和结论强度，不能当作业务准确性通过。
+
+置信区间明确抽样单位、假设、方法和置信水平，短样本披露不确定性；变化贡献不是因果解释。比率重算、跨日去重与关联防重继续遵循原合同，不通过 Python 绕过口径。
+
 ## 工作流
+
+游戏指标参数约定：对游戏次数、游戏用户数、投注金额、赢分、RTP、GGR、NGR，使用 `game_metric_requests` 将 `mention`（须与metric_mentions中的原词一致）、`concept` 和 `currency_scope` 分开传入。范围枚举cash/coin/split/combined分别表示Cash、Coin、分开展示、明确合并；不能因限定词位置变化丢失范围，也不能把用户未要求的混合金额标成美元。若返回 `game_scope_requires_structure`，尚未建立有效合同，须补全game_metric_requests并重新准备；与game_mode筛选冲突时先核对完整请求并修正同一准备参数；不要原样重试或删除限定。
+
+相对期间参数约定：单一窗口优先填写 `relative_period` 的 `unit`（day/week/month/year）、`count`、`offset`（向历史偏移的单位数）、`alignment`（rolling/complete_calendar）和 `mature`，并用 `period_expression` 保留原文证据。宿主计算实际日期，调用方不得自算相对日期或传成熟滞后天数。单个relative_period只表示一个窗口；多窗口用period_sides逐侧填写side_id、role及相对期间或绝对日期，唯一current侧与各comparison侧保留独立范围。不得再传顶层日期覆盖各侧。Tableau逐侧使用对应business_period查询，所有指标×侧义务均有实际证据后才可完整交付；不要把单侧证据声明为覆盖全部侧。Redshift会核对已声明主来源的实际date字段及单来源日期谓词，以period_evidence报告证明状态；未改变范围的单来源CTE投影/聚合可沿来源链继承证明；其他子查询、联接、外层范围修改及日期条件聚合等尚需进一步证明。未验证时保留已有结果，按诊断重规划成可验证的逐侧查询或使用等价受治理来源；不能仅凭coverage_obligation_ids宣称多侧完整。若旧入口返回 `period_expression_requires_structure`，表示尚未建立有效合同；重新理解完整范围后修正参数再准备，不受有效合同禁止重复准备的限制。不得原样重试或把工具参数修复转嫁成无必要的用户澄清；真正存在范围歧义时才一次性澄清。
 
 1. 从问题提取指标原词、期间原文、时区、时间桶、维度、筛选、人群、比较侧和输出要求，同一有效请求合同内只调用一次 `prepare_analysis` 固定 Runtime 快照、正式义务和 `plan_signature`。同一请求即使仍在等待后续规划，也不得用相同参数重复调用；直接复用首次返回的不可变合同。用户改变期间、维度、筛选或目标，或服务端明确提示合同失效时，重新准备合同；旧 evidence、preview token 和 job 不自动绑定新合同，重新验证适用性，按新合同重新预览必要查询。`metric_mentions` 保留用户的 Cash/真金等限定，不要先改写成可能丢失范围的指标 ID。用户使用“昨天/前一天”“最近 N 个 UTC 业务日”“最近 N 个已成熟 cohort”“最近 N 个完整周”等相对期间时，将包含比较侧的完整原文放入 `period_expression` 且不自行填入日期；宿主按 Runtime 业务日、指标成熟滞后和 UTC 自然周确定性解析。用户明确绝对日期时才传 `start_date` 和 `end_date`。不要猜测会实质改变结果的口径。
 2. 只为未解析义务或必要的公式、维度、字段和血缘调用参考工具。`get_metric_reference` 默认使用 `detail=summary` 和小 `limit`；精确命中后停止扩大候选，只有确需公式或来源合同时才读取 `full`。
