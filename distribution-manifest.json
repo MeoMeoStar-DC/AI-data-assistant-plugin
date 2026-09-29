@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "plugin_name": "ai-data-assistant",
-  "plugin_version": "0.2.1",
+  "plugin_version": "0.2.2",
   "source_repository": "https://github.com/ddddnake/AI-intelligent-analysis-Python",
-  "source_commit": "23122497214c23219ae38bb7ffbee786d70b52ca",
+  "source_commit": "05d0a1d89dcb6fdae5f992abf7523c6767ab97b7",
   "source_files": {
     "plugins/ai-data-assistant/.codex-plugin/plugin.json": "29885c928db788b6e149e76926d3db14c3f2041a3ea04a50a90c561aea9d195c",
     "plugins/ai-data-assistant/skills/analytics-reference/SKILL.md": "3382c4f9846bb7002392955f252709b6ee3cc7800face3ca5f2c37bfd211ba90",
@@ -14,12 +14,12 @@
     "plugins/ai-data-assistant/skills/assistant-connection/agents/openai.yaml": "62323d07af1b69147a1b8006baa734641d244c4e371246682bc31a1d43e35557",
     "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/metric-diagnostics.md": "d6e77101d051b1684a4661f72595dacb86ff32bd2bb000622cb32db0a01a4c67",
     "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/data-quality.md": "de4ced14017c92a3cb2b42d3d600bb93606245f1070853e42a0caa03b775abf7",
-    "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/analysis-validation.md": "930a4508ed706b62d1e5bc904ac8dea35f130ae4c79785109d02994c1b964337"
+    "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/analysis-validation.md": "c3cbc973ef6d77bf9a966ebac4363b7b281959728794d4b590705ee4a376bc71"
   },
   "generated_files": {
     ".agents/plugins/marketplace.json": "526c1c9eab3b16bf9393d2cc1980fb80412adfb9de9a372780cba7567b92383c",
     "README.md": "50c540dd3406d7434b2501535647050887a372284058005558b61288940ceb6f",
-    "plugins/ai-data-assistant/.codex-plugin/plugin.json": "5fdaabd3281375b7c860c1b8aa0d20e6dd12e8fc677df1d6a05d562b62ff112d",
+    "plugins/ai-data-assistant/.codex-plugin/plugin.json": "0433633a581e4b4ec68dfb5c4986d6c92df2a566867a75f8c73a40704cc872c7",
     "plugins/ai-data-assistant/.mcp.json": "3d13d72695bf6ed5b8c82d21ca894bf3029cae3e93cdb419554adf9f9785e391",
     "plugins/ai-data-assistant/skills/analytics-reference/SKILL.md": "3382c4f9846bb7002392955f252709b6ee3cc7800face3ca5f2c37bfd211ba90",
     "plugins/ai-data-assistant/skills/analytics-reference/agents/openai.yaml": "d42e1b943d6295140f1737694cb7fd94e2c738d8b466bebe01fddbabcf474088",
@@ -27,7 +27,7 @@
     "plugins/ai-data-assistant/skills/assistant-connection/agents/openai.yaml": "62323d07af1b69147a1b8006baa734641d244c4e371246682bc31a1d43e35557",
     "plugins/ai-data-assistant/skills/autonomous-data-analysis/SKILL.md": "9ce4d98239a56d72e1acf41816f07ed445a23c96697f491b6f0d20ca6bf70476",
     "plugins/ai-data-assistant/skills/autonomous-data-analysis/agents/openai.yaml": "7737da88ef8bbd59615d8ea87d2cb7554ec287e1f3e3bb79adec7945548f87f7",
-    "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/analysis-validation.md": "930a4508ed706b62d1e5bc904ac8dea35f130ae4c79785109d02994c1b964337",
+    "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/analysis-validation.md": "c3cbc973ef6d77bf9a966ebac4363b7b281959728794d4b590705ee4a376bc71",
     "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/data-quality.md": "de4ced14017c92a3cb2b42d3d600bb93606245f1070853e42a0caa03b775abf7",
     "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/metric-diagnostics.md": "d6e77101d051b1684a4661f72595dacb86ff32bd2bb000622cb32db0a01a4c67"
   },
