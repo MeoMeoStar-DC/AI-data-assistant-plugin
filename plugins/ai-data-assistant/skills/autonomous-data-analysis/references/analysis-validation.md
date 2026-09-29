@@ -6,6 +6,8 @@
 
 将用户要求的指标、比较侧、维度、人群、时间范围和分析轴逐项对应到实际结果及 evidence 引用。继承的会话记忆、参考元数据和未执行 SQL 不能补齐业务事实。只选择真正支撑结论的证据调用入口规定的 `finalize_analysis`，不为辅助复核重复准备合同。
 
+若收口返回缺失义务和 `query_coverage.recovery_actions`，先检查其他已有证据能否补齐，再按原合同的首选等价来源或逐侧期间恢复；新增有效证据后重新收口。不要重复相同证据的无变化收口，也不要仅把缺口写进限制便跳过仍可执行的恢复。两天合并查询的扫描期间不等于两个单日义务分别取得期间证明；派生计算和行内日期不能替代该证明。恢复仍无可信路径或预算耗尽时交付已有可信部分，并保留实际未完成状态。
+
 ## 复核重要计算
 
 - 核对合计、差值、变化率、单位、精度和零分母。由实际行集或受控查询复算，不以重复生成同一句答案作为独立验证。
@@ -26,3 +28,20 @@
 ## 参考来源与本地适配
 
 方法参考：[OpenAI validate-data](https://github.com/openai/role-specific-plugins/blob/fe5608d2512a7d6a7b9821ce8a88c48464ecd6e4/plugins/data-analytics/skills/validate-data/SKILL.md)，固定提交 `fe5608d2512a7d6a7b9821ce8a88c48464ecd6e4`；该提交仓库许可证为 MIT。本文为独立中文指引，未复制上游正文；以实际工具证据收口，不将模型自查当作宿主证明，不增加无恢复路径的整题门控。
+
+## 结构化分析要求与算术复核
+
+仅在当前服务 schema 提供 `analysis_requirements` 时使用。每项包含唯一 `requirement_id`、`operation` 和绑定基础指标原词的 `metric_mention`。`difference`、`relative_change`、`share_change` 还须指定已存在的 `comparison_side_id`；`share`、`share_change` 指定合同内 `dimension` 和 `denominator_scope=within_each_period_and_filters`。它们不会新增原始查询指标，也不能免除未知指标义务。
+
+计算发现用 `requirement_id` 关联要求。需要宿主复核数值时，同时返回 `value` 和 `calculation={operands: {...}, decimal_places: 6}`。每个操作数引用本次数据集表的 `evidence_id`、已选择的 `field` 及从零开始的 `row_index`；对完整表显式求和可用 `aggregate: 'sum'` 替代行号。不要使用模型抄写的常量作为原始操作数。
+
+| 操作 | operands 字段 | 输出单位 |
+| --- | --- | --- |
+| difference | current、previous | 原指标单位 |
+| relative_change | current、previous | 百分数，按 `(current-previous)/previous*100` |
+| share | numerator、denominator | 百分数 |
+| share_change | current、current_total、previous、previous_total | 百分点 |
+
+小数位允许 0–12，默认 6，按 Decimal 默认四舍五入复核。零分母返回 `value: null` 和 `value_status: 'undefined_zero_denominator'`，不能写成零。人数、比例及分类维度的列选择必须符合实际含义；`sum` 只在正式可加性及分组互斥已经确认时使用，跨日去重人数不得求和。
+
+`requirement_results` 将未记录执行、输入覆盖不完整、执行已记录分开。`numeric_validation=passed` 只证明所引用值的算术一致性，不证明分母口径、分群完整性、统计显著性或因果。`method_review_required` 仍须披露；算术失败时检查引用和公式并在预算内修复，已有查询结果继续交付，不能把图表或执行成功当作方法验证。
