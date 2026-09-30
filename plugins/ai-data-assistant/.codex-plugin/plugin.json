@@ -1,6 +1,6 @@
 {
   "name": "ai-data-assistant",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "面向 Codex 的自主只读业务数据分析与元数据检索插件",
   "author": {
     "name": "AI 数据助手项目组"
