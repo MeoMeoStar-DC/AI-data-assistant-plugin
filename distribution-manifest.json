@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "plugin_name": "ai-data-assistant",
-  "plugin_version": "0.2.6",
-  "source_repository": "https://github.com/ddddnake/AI-intelligent-analysis-Python",
-  "source_commit": "e9545a5fc2e1286f372f4524b5ab30f6bf94ea6c",
+  "plugin_version": "0.2.7",
+  "source_repository": "https://github.com/MeoMeoStar-DC/DCP-Data-Assident",
+  "source_commit": "695700a59bc2819d459afdb2890219cfe694c7ea",
   "source_files": {
     "plugins/ai-data-assistant/.codex-plugin/plugin.json": "29885c928db788b6e149e76926d3db14c3f2041a3ea04a50a90c561aea9d195c",
     "plugins/ai-data-assistant/skills/analytics-reference/SKILL.md": "3382c4f9846bb7002392955f252709b6ee3cc7800face3ca5f2c37bfd211ba90",
@@ -18,8 +18,8 @@
   },
   "generated_files": {
     ".agents/plugins/marketplace.json": "526c1c9eab3b16bf9393d2cc1980fb80412adfb9de9a372780cba7567b92383c",
-    "README.md": "69f96ad00b0e12e6440c118968125033d2fee796de12b9d2c19e45c68534708c",
-    "plugins/ai-data-assistant/.codex-plugin/plugin.json": "b1fab4a21bc20a65b6cb0da523d61e682e67679b6e85d3b00a4f7c2fc9f1c19b",
+    "README.md": "7e74ac76887fab4e20bcae60c9d8a891404ac22de27363980bcc44d212d61354",
+    "plugins/ai-data-assistant/.codex-plugin/plugin.json": "53af5b9c29cb2eb6f44bd73f26beb42832c24597c0c54e9fd977b03533f0739f",
     "plugins/ai-data-assistant/.mcp.json": "3d13d72695bf6ed5b8c82d21ca894bf3029cae3e93cdb419554adf9f9785e391",
     "plugins/ai-data-assistant/skills/analytics-reference/SKILL.md": "3382c4f9846bb7002392955f252709b6ee3cc7800face3ca5f2c37bfd211ba90",
     "plugins/ai-data-assistant/skills/analytics-reference/agents/openai.yaml": "d42e1b943d6295140f1737694cb7fd94e2c738d8b466bebe01fddbabcf474088",
@@ -32,7 +32,7 @@
     "plugins/ai-data-assistant/skills/autonomous-data-analysis/references/metric-diagnostics.md": "d6e77101d051b1684a4661f72595dacb86ff32bd2bb000622cb32db0a01a4c67"
   },
   "generator": "scripts/generate_ai_data_assistant_plugin_distribution.py",
-  "generator_sha256": "435a4177647f115972f4b93ae830ce9496f1a5a7932d2c953613207044d9113b",
+  "generator_sha256": "6949e223e2d90d01840693b1ad0572608fe9147d0585b45696535bd5d787f5f0",
   "distribution_repository": "https://github.com/MeoMeoStar-DC/AI-data-assistant-plugin",
   "mcp_url": "https://mcp.aidamms.com/mcp"
 }
